@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hastalık Tahmini</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+
+        body {
+            font-family: "Fira Sans", sans-serif;
+            background-image: url('../../static/doctor_uniform_background_realistic.jpg');
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            max-width: 800px;
+            margin: 50px auto;
+            margin-top: 150px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .label-container {
+            flex-basis: 50%;
+        }
+
+        .input-container {
+            flex-basis: 50%;
+            padding-left: 100px;
+        }
+
+        .label-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .input-container input[type="text"] {
+            width: calc(100% - 40px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .dropdown {
+            position: relative;
+            width: calc(100% - 40px);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow-y: auto;
+            max-height: 150px;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-option {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-option:hover {
+            background-color: #f0f0f0;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .selected-symptoms-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+            margin-left: 20px;
+
+        }
+
+        #symptomInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #submit {
+            margin-top: 120px;
+        }
+
+        #selectedSymptomsContainer {
+            margin-top: 30px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+            height: 300px;
+            margin-left: 20px;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-width: 600px;
+            width: 80%;
+        }
+
+        .additional-symptoms-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+        }
+
+        .additional-symptoms-container div {
+            display: flex;
+            align-items: center;
+        }
+
+        .additional-symptoms-container label {
+            margin-left: 5px;
+        }
+
+        .popup button {
+            margin-top: 20px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div id="symptoms" data-symptoms="{{ symptoms|safe }}"></div>
+    <div id="symptoms_tr" data-symptoms_tr="{{ symptoms_tr|safe }}"></div>
+    <div id="disease_symptoms" data-disease_symptoms="{{ disease_symptoms|safe }}"></div>
+    <div class="container">
+        
+        <div class="label-container">
+            <h1>Hastalık Tahmini</h1>
+            <form id="symptomForm" action="/results/" method="post" autocomplete="off">
+                {% csrf_token %}
+                <label for="symptoms">Semptomlarınızı giriniz:</label>
+                <div class="dropdown" id="symptomDropdown">
+                    <input type="text" id="symptomInput" name="symptoms" placeholder="Lütfen semptomunuzu giriniz.">
+                    <div class="dropdown-content" id="dropdownContent"></div>
+                </div>
+                <button type="button" id="addSymptomBtn">Ekle</button>
+                {% if admin %}
+                <select name="models" id="models">
+                    <option value="1">Random Forest</option>
+                    <option value="2">Decision Tree</option>
+                    <option value="3">Naive Bayes (Multinomial)</option>
+                    <option value="4">SVM</option>
+                    <option value="5">KNN</option>
+                    <option value="6">Random Forest 2</option>
+                    <option value="7">Decision Tree 2</option>
+                    <option value="8">Gradient Boosting</option>
+                </select>
+                {% endif %}
+                <button type="button" id="submit">Ara</button>
+            </form>
+        </div>
+        <div class="input-container">
+            <div class="selected-symptoms-container" id="selectedSymptomsContainer"></div>
+            <p style="font-size: 14px;">(Semptomun yanındaki buton ile yanlış girdiğiniz bir semptomu silebilirsiniz)
+            </p>
+        </div>
+    </div>
+    {% if admin %}
+    <button id="history">Hastalık Tahmin Geçmişi</button>
+    {% endif %}
+
+    <div class="popup" id="symptomPopup">
+        <h2>Ek Semptomlar</h2>
+        <div class="additional-symptoms-container" id="additionalSymptoms"></div>
+        <button type="button" id="confirmSymptomsBtn">Onayla</button>
+        <p>Sahip olduğunuz diğer semptomları ekleyebilirsiniz.</p>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var disease_symptoms = document.getElementById('disease_symptoms').dataset.disease_symptoms
+            disease_symptoms = disease_symptoms.replace(/'/g, '"')
+            disease_symptoms = JSON.parse(disease_symptoms)
+            console.log(disease_symptoms)
+
+
+            var symptoms = document.getElementById('symptoms').dataset.symptoms
+            symptoms = symptoms.replace(/'/g, '"')
+            symptoms = JSON.parse(symptoms)
+
+            var symptoms_tr = document.getElementById('symptoms_tr').dataset.symptoms_tr
+            symptoms_tr = symptoms_tr.replace(/'/g, '"')
+            symptoms_tr = JSON.parse(symptoms_tr)
+
+            const symptoms_dict = Object.fromEntries(symptoms.map((_, i) => [symptoms[i], symptoms_tr[i]]));
+            const reverse_symptoms_dict = Object.fromEntries(symptoms_tr.map((_, i) => [symptoms_tr[i], symptoms[i]]));
+            const symptomInput = document.getElementById('symptomInput');
+            const dropdownContent = document.getElementById('dropdownContent');
+            const selectedSymptomsContainer = document.getElementById('selectedSymptomsContainer');
+            const popup = document.getElementById('symptomPopup');
+            const overlay = document.getElementById('overlay');
+            const additionalSymptomsContainer = document.getElementById('additionalSymptoms');
+
+            const selectedSymptoms = [];
+
+            function updateDropdown(input) {
+                dropdownContent.innerHTML = '';
+                const filteredSymptoms = symptoms_tr.filter(symptom => symptom.toLowerCase().includes(input.toLowerCase()));
+                filteredSymptoms.forEach(symptom => {
+                    const option = document.createElement('div');
+                    option.textContent = symptom;
+                    option.classList.add('dropdown-option');
+                    option.onclick = function () {
+                        symptomInput.value = symptom;
+                        dropdownContent.innerHTML = '';
+                    };
+                    dropdownContent.appendChild(option);
+                });
+                dropdownContent.style.display = filteredSymptoms.length ? 'block' : 'none';
+            }
+
+            symptomInput.addEventListener('input', function () {
+                updateDropdown(this.value);
+            });
+
+            document.getElementById('symptomForm').addEventListener('keypress', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                }
+            });
+
+            document.getElementById('addSymptomBtn').addEventListener('click', function () {
+                const symptom = symptomInput.value.trim();
+                if (selectedSymptoms.length >= 15) {
+                    alert('En fazla 15 semptom seçebilirsiniz.');
+                    return;
+                }
+
+                if (!symptoms_tr.includes(symptom)) {
+                    alert('Lütfen listeden bir semptom seçiniz.');
+                    return;
+                }
+
+                if (symptom && !selectedSymptoms.includes(symptom) && symptoms_tr.includes(symptom)) {
+                    selectedSymptoms.push(symptom);
+                    renderSelectedSymptoms();
+                    addHiddenInput(symptom);
+                    symptomInput.value = '';
+                }
+            });
+
+            function renderSelectedSymptoms() {
+                selectedSymptomsContainer.innerHTML = selectedSymptoms.map(symptom => {
+                    return `
+            <div>
+                ${symptom}
+                <i class="fa-solid fa-times-circle" style="color: grey; cursor: pointer;"></i>
+            </div>`;
+                }).join('');
+
+                selectedSymptomsContainer.querySelectorAll('.fa-times-circle').forEach(icon => {
+                    icon.addEventListener('click', function (event) {
+                        const symptomToRemove = event.target.previousSibling.textContent.trim();
+                        selectedSymptoms.splice(selectedSymptoms.indexOf(symptomToRemove), 1);
+                        renderSelectedSymptoms();
+                        const inputToRemove = document.querySelector(`input[name="selected_symptoms"][value="${symptomToRemove}"]`);
+                        if (inputToRemove) inputToRemove.remove();
+                    });
+                });
+            }
+
+            function addHiddenInput(symptom) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'selected_symptoms';
+                input.value = symptom;
+                document.getElementById('symptomForm').appendChild(input);
+            }
+            try {
+                document.getElementById('history').addEventListener('click', function () {
+                window.location.href = '/prediction/history/';
+            });
+            } catch (error) {
+                console.log(error)
+            }
+
+
+            function showPopup(symptoms) {
+                additionalSymptomsContainer.innerHTML = symptoms.map(symptom => `
+                    <div>
+                        <input type="checkbox" id="${symptom}" name="additional_symptoms" value="${symptom}">
+                        <label for="${symptom}">${symptom}</label>
+                    </div>
+                `).join('');
+                popup.style.display = 'block';
+                overlay.style.display = 'block';
+            }
+
+            function hidePopup() {
+                popup.style.display = 'none';
+                overlay.style.display = 'none';
+            }
+
+            document.addEventListener('click', function (event) {
+                const dropdown = document.getElementById('dropdownContent');
+                if (!event.target.closest('.dropdown') && dropdown.style.display === 'block') {
+                    dropdown.style.display = 'none';
+                }
+            });
+
+            document.getElementById('symptomInput').addEventListener('click', function () {
+                document.getElementById('dropdownContent').style.display = 'block';
+            });
+
+            document.getElementById('confirmSymptomsBtn').addEventListener('click', function () {
+                const additionalSymptoms = Array.from(document.querySelectorAll('input[name="additional_symptoms"]:checked'))
+                    .map(input => input.value);
+                const allSymptoms = selectedSymptoms.concat(additionalSymptoms);
+                let convertToSymptoms = allSymptoms.map(symptom => reverse_symptoms_dict[symptom]);
+                let selectedModel = document.getElementById('models')?.value || 3;
+                fetch('/prediction/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ symptoms: convertToSymptoms, model: selectedModel })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        window.location.href = data.url;
+                    });
+            });
+
+            document.getElementById('submit').addEventListener('click', function () {
+                if (selectedSymptoms.length === 0) {
+                    alert('Lütfen en az bir semptom seçiniz.');
+                    return;
+                }
+                let possibleDiseases = [];
+                for (const [disease, symptoms] of Object.entries(disease_symptoms)) {
+                    if (selectedSymptoms.every(symptom => symptoms.includes(reverse_symptoms_dict[symptom]))) {
+                        possibleDiseases.push(disease);
+                    }
+                }
+                if (possibleDiseases.length > 0) {
+                    let additionalSymptoms = [];
+                    possibleDiseases.forEach(disease => {
+                        additionalSymptoms = additionalSymptoms.concat(disease_symptoms[disease]);
+                    });
+                    additionalSymptoms = [...new Set(additionalSymptoms)].filter(symptom => !selectedSymptoms.includes(symptoms_dict[symptom]));
+                    if (additionalSymptoms.length > 0) {
+                        additionalSymptomsTr = additionalSymptoms.map(symptom => symptoms_dict[symptom]);
+                        showPopup(additionalSymptomsTr);
+                    } else {
+                        document.getElementById('confirmSymptomsBtn').click();
+                    }
+                } else {
+                    document.getElementById('confirmSymptomsBtn').click();
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

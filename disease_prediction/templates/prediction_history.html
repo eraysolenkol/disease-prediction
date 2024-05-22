@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hastalık Tahmin Geçmişi</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        #back {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hastalık Tahminleri</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Hastalık</th>
+                <th>Olasılık</th>
+                <th>Semptomlar</th>
+                <th>Model</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prediction in predictions %}
+                <tr>
+                    <td>{{ prediction.0 }}</td>
+                    <td>{{ prediction.1 }}</td>
+                    <td>{{ prediction.2 }}</td>
+                    <td>{{ prediction.3 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button id="back">Geri Dön</button>
+
+    <script>
+        document.getElementById('back').addEventListener('click', function() {
+            window.location.href = '/prediction/';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+23-May-24 01:19:20 - GET request received for getting the prediction page
+23-May-24 01:19:20 - Not Found: /favicon.ico
+23-May-24 01:19:33 - POST request received for getting the result page
+23-May-24 01:19:33 - GET request received for getting the result page
+23-May-24 01:19:39 - POST request received for getting the result page
+23-May-24 01:19:39 - GET request received for getting the result page
+23-May-24 01:19:40 - GET request received for getting the prediction page
+23-May-24 01:20:04 - POST request received for getting the result page
+23-May-24 01:20:04 - GET request received for getting the result page
+23-May-24 01:20:08 - GET request received for getting the result page
+23-May-24 01:20:14 - GET request received for getting the result page
+23-May-24 01:20:16 - GET request received for getting the result page
+23-May-24 01:20:20 - GET request received for getting the result page
+23-May-24 01:20:22 - GET request received for getting the result page
+23-May-24 01:20:24 - GET request received for getting the result page
+23-May-24 01:20:29 - GET request received for getting the result page
+23-May-24 01:20:33 - GET request received for getting the result page
+23-May-24 01:25:47 - GET request received for getting the result page
+23-May-24 01:25:48 - Internal Server Error: /prediction/result/
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eray2\Desktop\disease_prediction\prediction\views.py", line 74, in result
+    diseases = get_top3_diseases(symptoms, model="gradient_boosting")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eray2\Desktop\disease_prediction\prediction\core\predict.py", line 72, in get_top3_diseases
+    y_pred_2 = model.predict_proba(inputtest)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\sklearn\ensemble\_gb.py", line 1666, in predict_proba
+    raw_predictions = self.decision_function(X)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\sklearn\ensemble\_gb.py", line 1564, in decision_function
+    X = self._validate_data(
+        ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\sklearn\base.py", line 654, in _validate_data
+    self._check_n_features(X, reset=reset)
+  File "C:\Python311\Lib\site-packages\sklearn\base.py", line 443, in _check_n_features
+    raise ValueError(
+ValueError: X has 132 features, but GradientBoostingClassifier is expecting 96 features as input.
+23-May-24 01:31:35 - GET request received for getting the result page
+23-May-24 01:34:35 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:34:55 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:37:28 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:39:07 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:40:20 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:40:32 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:40:37 - GET request received for getting the prediction page
+23-May-24 01:40:38 - Not Found: /favicon.ico
+23-May-24 01:40:50 - POST request received for getting the result page
+23-May-24 01:40:50 - GET request received for getting the result page
+23-May-24 01:40:51 - Internal Server Error: /prediction/result/
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eray2\Desktop\disease_prediction\prediction\views.py", line 99, in result
+    cur.execute("INSERT INTO predictions (disease, confidence, symptoms, model) VALUES (?, ?, ?, ?)", (diseases[0][0], diseases[0][1], ",".join(symptoms), modelsAndNumbers[model]))
+                                                                                                       ~~~~~~~~~~~^^^
+KeyError: 0
+23-May-24 01:41:17 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:41:20 - GET request received for getting the result page
+23-May-24 01:41:22 - Internal Server Error: /prediction/result/
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eray2\Desktop\disease_prediction\prediction\views.py", line 99, in result
+    cur.execute("INSERT INTO predictions (disease, confidence, symptoms, model) VALUES (?, ?, ?, ?)", (diseases[0][0], diseases[0][1], ",".join(symptoms), modelsAndNumbers[model]))
+                                                                                                       ~~~~~~~~~~~^^^
+KeyError: 0
+23-May-24 01:42:05 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:42:09 - GET request received for getting the result page
+23-May-24 01:42:11 - Internal Server Error: /prediction/result/
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eray2\Desktop\disease_prediction\prediction\views.py", line 98, in result
+    cur.execute("INSERT INTO predictions (disease, confidence, symptoms, model) VALUES (?, ?, ?, ?)", (diseases[0].disease, diseases[0].confidence, ",".join(symptoms), modelsAndNumbers[model]))
+                                                                                                       ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'disease'
+23-May-24 01:42:29 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:42:33 - GET request received for getting the result page
+23-May-24 01:42:34 - Internal Server Error: /prediction/result/
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eray2\Desktop\disease_prediction\prediction\views.py", line 99, in result
+    cur.execute("INSERT INTO predictions (disease, confidence, symptoms, model) VALUES (?, ?, ?, ?)", (diseases[0].disease, diseases[0].confidence, ",".join(symptoms), modelsAndNumbers[model]))
+                                                                                                       ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'disease'
+23-May-24 01:43:15 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:43:19 - GET request received for getting the result page
+23-May-24 01:43:20 - Internal Server Error: /prediction/result/
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eray2\Desktop\disease_prediction\prediction\views.py", line 99, in result
+    cur.execute("INSERT INTO predictions (disease, confidence, symptoms, model) VALUES (?, ?, ?, ?)", (diseases[0]['disease'], diseases[0]['confidence'], ",".join(symptoms), modelsAndNumbers[model]))
+sqlite3.ProgrammingError: SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 282168 and this is thread id 452612.
+23-May-24 01:44:10 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:44:13 - GET request received for getting the result page
+23-May-24 01:45:07 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:45:12 - GET request received for getting the result page
+23-May-24 01:48:34 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:48:46 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:48:50 - GET request received for getting the result page
+23-May-24 01:49:02 - GET request received for getting the result page
+23-May-24 01:50:49 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:51:10 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:51:24 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:51:29 - GET request received for getting the result page
+23-May-24 01:51:42 - GET request received for getting the result page
+23-May-24 01:51:42 - GET request received for getting the result page
+23-May-24 01:51:48 - GET request received for getting the result page
+23-May-24 01:51:50 - GET request received for getting the result page
+23-May-24 01:51:52 - GET request received for getting the result page
+23-May-24 01:51:54 - GET request received for getting the result page
+23-May-24 01:51:59 - GET request received for getting the result page
+23-May-24 01:52:02 - GET request received for getting the result page
+23-May-24 01:52:04 - GET request received for getting the result page
+23-May-24 01:52:06 - GET request received for getting the result page
+23-May-24 01:52:21 - GET request received for getting the result page
+23-May-24 01:54:29 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:55:24 - C:\Users\eray2\Desktop\disease_prediction\prediction\urls.py changed, reloading.
+23-May-24 01:55:42 - GET request received for getting the prediction page
+23-May-24 01:55:48 - GET request received for getting the prediction page
+23-May-24 01:56:00 - POST request received for getting the result page
+23-May-24 01:56:00 - GET request received for getting the result page
+23-May-24 01:56:05 - GET request received for getting the prediction page
+23-May-24 01:57:03 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:58:47 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 01:58:51 - GET request received for getting the result page
+23-May-24 02:00:03 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 02:00:09 - GET request received for getting the result page
+23-May-24 02:00:11 - GET request received for getting the result page
+23-May-24 02:00:12 - GET request received for getting the result page
+23-May-24 02:00:45 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 02:00:49 - Error fetching prediction history: no such column: id
+23-May-24 02:01:32 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 02:02:25 - GET request received for getting the prediction page
+23-May-24 02:02:40 - GET request received for getting the prediction page
+23-May-24 02:02:40 - GET request received for getting the prediction page
+23-May-24 02:03:20 - GET request received for getting the prediction page
+23-May-24 02:03:21 - Not Found: /history/
+23-May-24 02:03:32 - GET request received for getting the prediction page
+23-May-24 02:04:30 - GET request received for getting the prediction page
+23-May-24 02:04:32 - GET request received for getting the prediction page
+23-May-24 02:05:39 - GET request received for getting the prediction page
+23-May-24 02:05:43 - GET request received for getting the prediction page
+23-May-24 02:06:32 - GET request received for getting the prediction page
+23-May-24 02:07:00 - GET request received for getting the prediction page
+23-May-24 02:07:01 - GET request received for getting the prediction page
+23-May-24 02:07:13 - GET request received for getting the prediction page
+23-May-24 02:07:13 - GET request received for getting the prediction page
+23-May-24 02:07:32 - GET request received for getting the prediction page
+23-May-24 02:07:43 - GET request received for getting the prediction page
+23-May-24 02:08:42 - GET request received for getting the prediction page
+23-May-24 02:08:44 - GET request received for getting the prediction page
+23-May-24 02:08:47 - GET request received for getting the prediction page
+23-May-24 02:09:02 - GET request received for getting the prediction page
+23-May-24 02:09:04 - GET request received for getting the prediction page
+23-May-24 02:09:08 - GET request received for getting the prediction page
+23-May-24 02:09:13 - GET request received for getting the prediction page
+23-May-24 02:09:21 - POST request received for getting the result page
+23-May-24 02:09:21 - GET request received for getting the result page
+23-May-24 02:09:33 - GET request received for getting the prediction page
+23-May-24 02:11:17 - C:\Users\eray2\Desktop\disease_prediction\prediction\views.py changed, reloading.
+23-May-24 02:11:22 - GET request received for getting the prediction page
+23-May-24 02:11:23 - Not Found: /favicon.ico
+23-May-24 02:11:28 - GET request received for getting the result page
+23-May-24 02:11:33 - GET request received for getting the prediction page

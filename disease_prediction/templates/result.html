@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonuç</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+
+        body {
+            font-family: "Fira Sans", sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('../../static/blur-hospital.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .disease {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            border: 1px solid #050101;
+            height: 80px;
+        }
+
+        .disease:hover {
+            cursor: pointer;
+        }
+
+        .red {
+            background-color: #ffcccc;
+        }
+
+        .yellow {
+            background-color: #fff9c4;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .information {
+            padding-top: 100px;
+            font-size: 18px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .stars {
+            font-size: 16px;
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+        }
+
+        #popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 85%;
+            height: 60%;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div id="diseases_translations" data-diseases_translations="{{ diseases_translations }}"></div>
+    <div id="diseases" data-diseases="{{ diseases }}"></div>
+    <div id="descriptions" data-descriptions="{{ descriptions }}"></div>
+    <div id="precautions" data-precautions="{{ precautions }}"></div>
+    <div id="disease_symptoms" data-disease_symptoms="{{ disease_symptoms|safe }}"></div>
+    <div id="symptoms" data-symptoms="{{ symptoms|safe }}"></div>
+    <div id="symptoms_tr" data-symptoms_tr="{{ symptoms_tr|safe }}"></div>
+
+    <div class="container"></div>
+
+    <script>
+        function removeSpacesFromEndOfKeys(obj) {
+            var newObj = {};
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    var newKey = key.replace(/\s+$/g, ''); 
+                    newObj[newKey] = obj[key];
+                }
+            }
+            return newObj;
+        }
+
+        var symptoms = document.getElementById('symptoms').dataset.symptoms
+        symptoms = symptoms.replace(/'/g, '"')
+        symptoms = JSON.parse(symptoms)
+
+        var symptoms_tr = document.getElementById('symptoms_tr').dataset.symptoms_tr
+        symptoms_tr = symptoms_tr.replace(/'/g, '"')
+        symptoms_tr = JSON.parse(symptoms_tr)
+
+        const symptoms_dict = Object.fromEntries(symptoms.map((_, i) => [symptoms[i], symptoms_tr[i]]));
+        const reverse_symptoms_dict = Object.fromEntries(symptoms_tr.map((_, i) => [symptoms_tr[i], symptoms[i]]));
+
+        var disease_symptoms = document.getElementById('disease_symptoms').dataset.disease_symptoms
+        disease_symptoms = disease_symptoms.replace(/'/g, '"')
+        disease_symptoms = JSON.parse(disease_symptoms)
+        disease_symptoms = removeSpacesFromEndOfKeys(disease_symptoms)
+
+
+
+
+        var descriptions = document.getElementById('descriptions').getAttribute('data-descriptions')
+        descriptions = descriptions.replace(/'/g, '"');
+        descriptions = JSON.parse(descriptions);
+        var precautions = document.getElementById('precautions').getAttribute('data-precautions')
+        precautions = precautions.replace(/'/g, '"');
+        precautions = JSON.parse(precautions);
+        var diseasePrecautions = {};
+        var diseaseDescriptions = {};
+        descriptions.forEach(function (description) {
+            var splitDescription = description.split(",");
+            var diseaseName = splitDescription[0];
+            var descriptionString = splitDescription.slice(1).join(",");
+            diseaseDescriptions[diseaseName.trim()] = descriptionString.trim();
+        });
+        console.log(diseaseDescriptions);
+        precautions.forEach(function (precaution) {
+            var splitPrecaution = precaution.split(",");
+            var diseaseName = splitPrecaution[0];
+            var precautionsString = splitPrecaution.slice(1).join(",");
+            diseasePrecautions[diseaseName.trim()] = precautionsString.trim();
+        });
+
+        var diseasesTr = document.getElementById('diseases_translations').getAttribute('data-diseases_translations')
+        diseasesTr = diseasesTr.replace(/'/g, '"');
+        var diseasesTranslations = JSON.parse(diseasesTr);
+        var container = document.querySelector('.container');
+        var diseases = document.getElementById('diseases').getAttribute('data-diseases');
+        diseases = diseases.replace(/'/g, '"');
+        diseases = JSON.parse(diseases);
+        for (var i = 0; i < diseases.length; i++) {
+            if (diseases[i].disease == "Diabetes ") {
+                diseases[i].disease = "Diabetes"
+            } else if (diseases[i].disease == "Hypertension ") {
+                diseases[i].disease = "Hypertension"
+            }
+            let disease = diseases[i];
+            let diseaseName = disease.disease;
+            let diseaseProbability = disease.confidence;
+            let diseaseDescription = diseaseDescriptions[diseaseName];
+            let diseasePrecaution = diseasePrecautions[diseaseName];
+            let diseaseSymptoms = disease_symptoms[diseaseName];
+            let diseaseSymptomsTr = diseaseSymptoms.map(symptom => symptoms_dict[symptom]);
+            let diseaseClass = 'white';
+            if (diseaseProbability >= 75) {
+                diseaseClass = 'red';
+            } else if (diseaseProbability >= 50) {
+                diseaseClass = 'yellow';
+            }
+            let diseaseElement = document.createElement('div');
+            diseaseElement.classList.add('disease');
+            diseaseElement.classList.add(diseaseClass);
+            console.log(diseasesTranslations);
+            if (diseaseProbability >= 10) {
+                diseaseElement.innerHTML = `
+                <p>${diseasesTranslations[diseaseName]}</p>
+                <p>Olasılık: ${diseaseProbability.toFixed(2)}%</p>
+            `;
+                let color = 'grey';
+                if (diseaseProbability >= 75) {
+                    color = 'red';
+                } else if (diseaseProbability >= 50) {
+                    color = 'yellow';
+                }
+                diseaseElement.addEventListener('click', function () {
+                    showPopup(diseaseName, diseaseDescription, diseasePrecaution, diseaseSymptomsTr, color);
+                });
+                container.appendChild(diseaseElement);
+            }
+
+        }
+
+        const text = document.createElement('p');
+        text.textContent = "Daha fazla bilgi almak için hastalıklara tıklayabilirsiniz.";
+        container.appendChild(text);
+        const againBtn = document.createElement('button');
+        againBtn.classList.add('button');
+        againBtn.id = 'again';
+        againBtn.textContent = "Tekrar Dene";
+        container.appendChild(againBtn);
+
+
+
+
+        function showPopup(diseaseName, description, precautions, diseaseSymptoms, color) {
+            if (document.getElementById('popup')) {
+                return;
+            }
+            var popupContent = `
+                <div id="popup">
+                    <button style="position: absolute; top: 10px; right: 10px; background-color: transparent; border: none; font-size: 16px; cursor: pointer;" onclick="closePopup()">X</button>
+                    <h2>${diseasesTranslations[diseaseName]} <i style="color:${color};" class="fa-solid fa-star"></i></h2>
+                    <p><strong>Açıklama:</strong> ${description}</p>
+                    <p><strong>Önlemler:</strong> ${precautions}</p>
+                    <p><strong>Genel Belirtileri:</strong> ${diseaseSymptoms}</p>
+                    <p><strong>Detaylı bilgi için <a href="https://www.google.com/search?q=${diseasesTranslations[diseaseName]} nedir" target="_blank">buraya</a> tıklayabilirsiniz.</strong></p>
+                    <p class="information"><i>(Bu site yapay zeka ile oluşturulmuştur. Sadece hastalığınızı tahmin etmenize yarar, sonuçlar kesin değildir. Lütfen semptomlarınızla gerçek sonucunuzu öğrenmek için en yakın doktorunuzu ziyaret ediniz.)</i></p>
+                    <div class="stars">
+                    <p><i style="color:red;" class="fa-solid fa-star"></i> - Yüksek İhtimal</p> &nbsp;&nbsp;
+                    <p><i style="color:yellow;" class="fa-solid fa-star"></i> - Orta İhtimal</p> &nbsp;&nbsp;
+                    <p><i style="color:grey;" class="fa-solid fa-star"></i> - Düşük İhtimal</p>
+                    </div>
+                    </div>
+            `;
+            var popup = document.createElement('div');
+            popup.innerHTML = popupContent;
+            document.body.appendChild(popup);
+        }
+
+        function closePopup() {
+            var popup = document.getElementById('popup');
+            if (popup) {
+                popup.remove();
+            }
+        }
+
+        document.body.addEventListener('click', function (event) {
+            if (!event.target.closest('.container') && !event.target.closest('#popup')) {
+                closePopup();
+            }
+        });
+
+        document.getElementById('again').addEventListener('click', function () {
+            window.location.href = '/prediction';
+        });
+
+    </script>
+</body>
+
+</html>
