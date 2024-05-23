@@ -171,6 +171,94 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
+
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                margin: 0;
+                padding: 0;
+            }
+
+            .input-container {
+                padding-left: 0;
+            }
+
+            .selected-symptoms-container {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+
+            .input-container {
+                padding-left: 0;
+            }
+
+            .label-container {
+                padding: 0 20px;
+            }
+
+            .label-container label {
+                margin-bottom: 5px;
+            }
+
+            .dropdown-content {
+                max-height: 100px;
+            }
+
+            #selectedSymptomsContainer {
+                width: 400px;
+                margin: 0
+            }
+
+            #selectedSymptomsContainer div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                border-bottom: 1px solid #ccc;
+            }
+
+            #selectedSymptomsContainer div:last-child {
+                border-bottom: none;
+            }
+
+            #selectedSymptomsContainer div i {
+                display: none;
+            }
+
+            #selectedSymptomsContainer div:hover i {
+                display: block;
+            }
+
+            #selectedSymptomsContainer div:hover i:hover {
+                color: red;
+            }
+
+            .popup {
+                width: 90%;
+            }
+
+            .additional-symptoms-container {
+                grid-template-columns: repeat(3, 1fr);
+                font-size: 10px;
+            }
+
+            .additional-symptoms-container div {
+                margin-bottom: 3px;
+            }
+
+            .additional-symptoms-container label {
+                margin-left: 2px;
+            }
+
+            .popup button {
+                margin-top: 10px;
+            }
+
+ 
+        }
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"

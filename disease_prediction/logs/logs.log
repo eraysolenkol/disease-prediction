@@ -191,3 +191,56 @@ sqlite3.ProgrammingError: SQLite objects created in a thread can only be used in
 23-May-24 02:11:23 - Not Found: /favicon.ico
 23-May-24 02:11:28 - GET request received for getting the result page
 23-May-24 02:11:33 - GET request received for getting the prediction page
+23-May-24 02:48:22 - GET request received for getting the prediction page
+23-May-24 02:48:23 - Not Found: /favicon.ico
+23-May-24 02:49:16 - POST request received for getting the result page
+23-May-24 02:49:16 - GET request received for getting the result page
+23-May-24 02:49:30 - POST request received for getting the result page
+23-May-24 02:49:30 - GET request received for getting the result page
+23-May-24 02:50:00 - GET request received for getting the result page
+23-May-24 02:50:12 - GET request received for getting the result page
+23-May-24 02:50:20 - GET request received for getting the result page
+23-May-24 02:50:22 - GET request received for getting the result page
+23-May-24 02:50:45 - GET request received for getting the prediction page
+23-May-24 02:51:24 - GET request received for getting the prediction page
+23-May-24 02:51:42 - GET request received for getting the prediction page
+23-May-24 02:51:52 - GET request received for getting the prediction page
+23-May-24 02:52:13 - GET request received for getting the prediction page
+23-May-24 02:52:24 - GET request received for getting the prediction page
+23-May-24 02:52:24 - GET request received for getting the prediction page
+23-May-24 02:52:42 - GET request received for getting the prediction page
+23-May-24 02:52:51 - GET request received for getting the prediction page
+23-May-24 02:54:31 - GET request received for getting the prediction page
+23-May-24 02:55:41 - GET request received for getting the prediction page
+23-May-24 02:56:01 - GET request received for getting the prediction page
+23-May-24 02:56:07 - GET request received for getting the prediction page
+23-May-24 02:56:12 - GET request received for getting the prediction page
+23-May-24 02:57:13 - GET request received for getting the prediction page
+23-May-24 02:57:25 - GET request received for getting the prediction page
+23-May-24 02:57:36 - GET request received for getting the prediction page
+23-May-24 02:57:37 - Not Found: /favicon.ico
+23-May-24 02:57:47 - GET request received for getting the prediction page
+23-May-24 02:57:52 - GET request received for getting the prediction page
+23-May-24 02:58:12 - GET request received for getting the prediction page
+23-May-24 02:58:17 - GET request received for getting the prediction page
+23-May-24 02:58:20 - GET request received for getting the prediction page
+23-May-24 02:58:24 - GET request received for getting the prediction page
+23-May-24 02:58:37 - GET request received for getting the prediction page
+23-May-24 02:58:37 - Not Found: /favicon.ico
+23-May-24 02:58:41 - GET request received for getting the prediction page
+23-May-24 02:59:36 - GET request received for getting the prediction page
+23-May-24 03:00:12 - POST request received for getting the result page
+23-May-24 03:00:12 - GET request received for getting the result page
+23-May-24 03:00:22 - POST request received for getting the result page
+23-May-24 03:00:22 - GET request received for getting the result page
+23-May-24 03:00:39 - POST request received for getting the result page
+23-May-24 03:00:39 - GET request received for getting the result page
+23-May-24 03:01:12 - GET request received for getting the prediction page
+23-May-24 03:01:15 - Not Found: /favicon.ico
+23-May-24 03:03:38 - Not Found: /favicon.ico
+23-May-24 03:06:35 - Not Found: /favicon.ico
+23-May-24 03:06:41 - GET request received for getting the result page
+23-May-24 03:06:42 - Not Found: /favicon.ico
+23-May-24 03:08:52 - Not Found: /favicon.ico
+23-May-24 03:09:05 - Not Found: /favicon.ico
+23-May-24 03:09:23 - GET request received for getting the prediction page
